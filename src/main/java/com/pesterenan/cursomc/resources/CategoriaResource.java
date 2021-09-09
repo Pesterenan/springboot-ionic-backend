@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pesterenan.cursomc.domain.Categoria;
 import com.pesterenan.cursomc.services.CategoriaService;
+import com.pesterenan.cursomc.services.exceptions.DataIntegrityException;
 import com.pesterenan.cursomc.services.exceptions.ObjectNotFoundException;
 
 @RestController
@@ -44,6 +46,12 @@ public class CategoriaResource {
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Long id) {
 		obj.setId(id);
 		obj = catService.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) throws DataIntegrityException {
+		catService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 
