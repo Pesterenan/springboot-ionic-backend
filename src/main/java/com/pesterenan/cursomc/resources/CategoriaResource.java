@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,8 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+		Categoria obj = catService.fromDTO(objDto);
 		obj = catService.insert(obj);
 		// Boa prática de REST: Retornar URI do objeto criado após inserção
 		// Pega o URI do request atual, e adiciona a nova id do novo objeto já no banco
@@ -48,7 +51,8 @@ public class CategoriaResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Long id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Long id) {
+		Categoria obj = catService.fromDTO(objDto);
 		obj.setId(id);
 		obj = catService.update(obj);
 		return ResponseEntity.noContent().build();
