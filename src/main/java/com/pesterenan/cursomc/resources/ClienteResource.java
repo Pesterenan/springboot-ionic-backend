@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pesterenan.cursomc.domain.Categoria;
 import com.pesterenan.cursomc.domain.Cliente;
 import com.pesterenan.cursomc.dto.ClienteDTO;
 import com.pesterenan.cursomc.dto.ClienteNewDTO;
