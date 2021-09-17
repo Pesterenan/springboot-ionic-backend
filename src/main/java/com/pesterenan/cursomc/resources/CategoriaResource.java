@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pesterenan.cursomc.domain.Categoria;
-import com.pesterenan.cursomc.dto.CategoriaDTO;
+import com.pesterenan.cursomc.dto.Pedido;
 import com.pesterenan.cursomc.services.CategoriaService;
 import com.pesterenan.cursomc.services.exceptions.DataIntegrityException;
 import com.pesterenan.cursomc.services.exceptions.ObjectNotFoundException;
@@ -40,7 +40,7 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido objDto) {
 		Categoria obj = catService.fromDTO(objDto);
 		obj = catService.insert(obj);
 		// Boa prática de REST: Retornar URI do objeto criado após inserção
@@ -51,7 +51,7 @@ public class CategoriaResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Long id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody Pedido objDto, @PathVariable Long id) {
 		Categoria obj = catService.fromDTO(objDto);
 		obj.setId(id);
 		obj = catService.update(obj);
@@ -65,21 +65,21 @@ public class CategoriaResource {
 	}
 
 	@GetMapping()
-	public ResponseEntity<List<CategoriaDTO>> findAll() throws ObjectNotFoundException {
+	public ResponseEntity<List<Pedido>> findAll() throws ObjectNotFoundException {
 		List<Categoria> list = catService.findAll();
-		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		List<Pedido> listDTO = list.stream().map(obj -> new Pedido(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	// Requisição de objetos Categoria por Página, para evitar trazer todos os registros de uma vez só.
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<CategoriaDTO>> findPage(
+	public ResponseEntity<Page<Pedido>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy) throws ObjectNotFoundException {
 		Page<Categoria> list = catService.findPage(page,linesPerPage,direction, orderBy);
-		Page<CategoriaDTO> listDTO = list.map(obj -> new CategoriaDTO(obj));
+		Page<Pedido> listDTO = list.map(obj -> new Pedido(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
 	

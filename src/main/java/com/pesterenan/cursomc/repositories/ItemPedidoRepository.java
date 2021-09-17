@@ -8,4 +8,5 @@ import com.pesterenan.cursomc.domain.ItemPedido;
 @Repository
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
 
+
 }
