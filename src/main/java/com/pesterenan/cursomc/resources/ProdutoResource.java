@@ -1,5 +1,7 @@
 package com.pesterenan.cursomc.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,9 @@ public class ProdutoResource {
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="direction", defaultValue="ASC") String direction, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy) throws ObjectNotFoundException {
-		Page<Produto> list = prodService.search(nome, URL.decodeLongList(categorias), page, linesPerPage, direction, orderBy);
+		List<Long> ids = URL.decodeLongList(categorias);
+		String nomeDecoded = URL.decodeParam(nome);
+		Page<Produto> list = prodService.search(nomeDecoded, ids, page, linesPerPage, direction, orderBy);
 		Page<ProdutoDTO> listDTO = list.map(obj -> new ProdutoDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
