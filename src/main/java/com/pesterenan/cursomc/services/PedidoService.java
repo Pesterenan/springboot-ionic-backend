@@ -47,7 +47,7 @@ public class PedidoService {
 				"Objeto não encontrado! Id: " + id + " Tipo: " + Pedido.class.getName()));
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly=false)
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
