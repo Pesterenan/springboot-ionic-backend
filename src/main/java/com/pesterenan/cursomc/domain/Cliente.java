@@ -33,7 +33,10 @@ public class Cliente implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-
+	
+	@JsonIgnore
+	private String senha;
+	
 	// O parametro Cascade indica que essa propriedade será apagada junto com o objeto principal
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
@@ -49,13 +52,14 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
-	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCodigo();
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -97,6 +101,15 @@ public class Cliente implements Serializable {
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCodigo();
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 
 	public List<Endereco> getEnderecos() {
 		return enderecos;
